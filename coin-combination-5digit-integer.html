@@ -65,10 +65,10 @@
         }
         .control-btn:active { transform: scale(0.95); background-color: #d97706; }
 
-        /* 調整速度拉霸與聽題目控制面板區 (已將 step-banner 移至拉霸右側) */
+        /* 調整速度拉霸與聽題目控制面板區 */
         .top-panel {
             display: flex; justify-content: space-between; align-items: center; width: 100%;
-            background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 10px; padding: 4px 8px; gap: 6px;
+            background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 10px; padding: 6px 8px; gap: 6px;
         }
         .slider-box {
             display: flex; flex-direction: column; align-items: center; gap: 2px; flex-shrink: 0;
@@ -86,16 +86,16 @@
         }
         .speed-text { font-size: 10px; font-weight: bold; color: #7c3aed; width: 38px; text-align: left; }
 
-        /* 步驟/目前題目提示區 (已配置於速度拉霸右側) */
+        /* 放大後的步驟/目前題目提示區 (字體特別放大，保護視力) */
         .step-banner { 
-            background: #fef3c7; color: #92400e; padding: 4px 6px; border-radius: 6px; 
-            font-size: 11px; font-weight: bold; flex-grow: 1; text-align: center; border: 1px solid #fde68a;
+            background: #fef3c7; color: #92400e; padding: 6px 8px; border-radius: 6px; 
+            font-size: 14px; font-weight: bold; flex-grow: 1; text-align: center; border: 1px solid #fde68a;
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
         }
 
         .listen-action-btn {
             background-color: #0ea5e9; color: white; border: none; border-radius: 8px;
-            padding: 5px 10px; font-size: 11px; font-weight: bold; cursor: pointer;
+            padding: 8px 12px; font-size: 12px; font-weight: bold; cursor: pointer;
             box-shadow: 0 2px 4px rgba(0,0,0,0.15); display: flex; align-items: center; gap: 3px; flex-shrink: 0;
         }
         .listen-action-btn:active { transform: scale(0.95); background-color: #0284c7; }
@@ -113,14 +113,14 @@
         .vertical-math {
             display: inline-flex; flex-direction: column; align-items: center;
             font-size: 22px; font-weight: bold; font-family: monospace;
-            background: #f8fafc; padding: 4px 4px; border-radius: 12px; border: 2px solid #cbd5e1;
+            background: #f8fafc; padding: 6px 4px; border-radius: 12px; border: 2px solid #cbd5e1;
             position: relative; width: 100%; max-width: 420px;
         }
-        .math-row { display: flex; gap: 4px; width: 100%; justify-content: center; align-items: center; margin: 1px 0; }
-        .math-line { width: 92%; height: 3px; background: #333; margin: 2px auto; }
+        .math-row { display: flex; gap: 4px; width: 100%; justify-content: center; align-items: center; margin: 2px 0; }
+        .math-line { width: 92%; height: 3px; background: #333; margin: 3px auto; }
         .cell { width: 36px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 38px; }
         
-        .operator { position: absolute; left: 6px; top: 62px; font-size: 18px; color: #333; }
+        .operator { position: absolute; left: 6px; top: 68px; font-size: 18px; color: #333; }
 
         .coin-hint {
             display: flex; flex-wrap: wrap; gap: 1px; justify-content: center; max-width: 34px; margin-top: 1px;
@@ -169,7 +169,7 @@
     <div id="gameScreen">
         <div id="startOverlay">
             <div class="start-content-box">
-                <h2>🪙 五位數加法互動遊戲(無進位)🪙</h2>
+                <h2>🪙 五位數加法互動遊戲(無進位)</h2>
                 <div class="intro-card">
                     <h3>📖 遊戲貼心設計說明</h3>
                     <ul>
@@ -188,7 +188,7 @@
             <button class="control-btn" id="pauseBtn" onclick="togglePause()">暫停</button>
         </div>
         
-        <!-- 調整速度拉霸、步驟提示區與聽題目按鈕並排於 top-panel 中 -->
+        <!-- 調整速度拉霸、放大後的步驟提示區與聽題目按鈕並排 -->
         <div class="top-panel">
             <div class="slider-box">
                 <div class="slider-title">調整速度拉霸</div>
@@ -410,7 +410,7 @@
             renderCoins('tDownCoins', t2, '10');
             renderCoins('uDownCoins', u2, '1');
 
-            document.getElementById('stepBanner').innerText = `${total1}+${total2} ｜ 1:個 (${u1}+${u2})`;
+            document.getElementById('stepBanner').innerText = `${total1} + ${total2} ｜ 1:個 (${u1}+${u2})`;
             
             speak(`我們來算算看，${total1}加${total2}。先算個位數，${u1}加${u2}。`, () => {
                 setTimeout(() => {
@@ -479,7 +479,7 @@
                         document.getElementById('feedback').innerText = `🎉 個位數算對了！`;
                         confetti();
 
-                        document.getElementById('stepBanner').innerText = `${total1}+${total2} ｜ 2:十 (${t1}+${t2})`;
+                        document.getElementById('stepBanner').innerText = `${total1} + ${total2} ｜ 2:十 (${t1}+${t2})`;
 
                         speak(`個位數算對了。接下來算十位數，${t1}加${t2}。`, () => {
                             setTimeout(() => {
@@ -510,7 +510,7 @@
                         document.getElementById('feedback').innerText = `🎉 十位數算對了！接下來算百位數！`;
                         confetti();
 
-                        document.getElementById('stepBanner').innerText = `${total1}+${total2} ｜ 3:百 (${h1}+${h2})`;
+                        document.getElementById('stepBanner').innerText = `${total1} + ${total2} ｜ 3:百 (${h1}+${h2})`;
 
                         speak(`十位數算對了。接下來算百位數，${h1}加${h2}。`, () => {
                             setTimeout(() => {
@@ -541,7 +541,7 @@
                         document.getElementById('feedback').innerText = `🎉 百位數算對了！接下來算千位數！`;
                         confetti();
 
-                        document.getElementById('stepBanner').innerText = `${total1}+${total2} ｜ 4:千 (${th1}+${th2})`;
+                        document.getElementById('stepBanner').innerText = `${total1} + ${total2} ｜ 4:千 (${th1}+${th2})`;
 
                         speak(`百位數算對了。接下來算千位數，${th1}加${th2}。`, () => {
                             setTimeout(() => {
@@ -572,7 +572,7 @@
                         document.getElementById('feedback').innerText = `🎉 千位數算對了！最後算萬位數！`;
                         confetti();
 
-                        document.getElementById('stepBanner').innerText = `${total1}+${total2} ｜ 5:萬 (${tth1}+${tth2})`;
+                        document.getElementById('stepBanner').innerText = `${total1} + ${total2} ｜ 5:萬 (${tth1}+${tth2})`;
 
                         speak(`千位數算對了。最後算萬位數，${tth1}加${tth2}。`, () => {
                             setTimeout(() => {
@@ -606,7 +606,7 @@
                         score++;
                         document.getElementById('score').innerText = `已完成: ${score} 關`;
                         document.getElementById('feedback').innerText = `🌟 太棒了！總和是 ${grandTotal}，恭喜過關！`;
-                        document.getElementById('stepBanner').innerText = `【完成】${total1}+${total2}＝${grandTotal}`;
+                        document.getElementById('stepBanner').innerText = `${total1}+${total2}＝${grandTotal} (過關)`;
                         confetti();
 
                         speak(`太棒了，總和是 ${grandTotal}，恭喜過關！`, () => {
