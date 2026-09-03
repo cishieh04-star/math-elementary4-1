@@ -14,12 +14,12 @@
             display: flex; flex-direction: column; align-items: center; justify-content: center; 
             overflow: hidden; touch-action: manipulation; 
         }
-        h1 { color: #b45309; font-size: 17px; margin: 4px 0; }
+        h1 { color: #b45309; font-size: 16px; margin: 3px 0; }
         
         #gameScreen { 
-            width: 100%; max-width: 540px; height: 97vh; max-height: 840px;
+            width: 100%; max-width: 580px; height: 97vh; max-height: 840px;
             display: flex; flex-direction: column; align-items: center; justify-content: space-between; 
-            background: #fff; border-radius: 16px; border: 3px solid #f59e0b; padding: 10px; 
+            background: #fff; border-radius: 16px; border: 3px solid #f59e0b; padding: 8px; 
             box-shadow: 0 4px 12px rgba(0,0,0,0.1); margin: auto;
             position: relative;
         }
@@ -54,51 +54,56 @@
         
         .status-bar { 
             display: flex; justify-content: space-between; align-items: center; 
-            width: 100%; font-size: 15px; font-weight: bold; color: #b45309; 
-            border-bottom: 2px solid #fef3c7; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; 
+            width: 100%; font-size: 14px; font-weight: bold; color: #b45309; 
+            border-bottom: 2px solid #fef3c7; padding-bottom: 3px; padding-left: 5px; padding-right: 5px; 
         }
 
         .control-btn {
             background-color: #f59e0b; color: white; border: none; border-radius: 8px;
-            padding: 4px 10px; font-size: 13px; font-weight: bold; cursor: pointer;
+            padding: 4px 10px; font-size: 12px; font-weight: bold; cursor: pointer;
             box-shadow: 0 2px 4px rgba(0,0,0,0.15);
         }
         .control-btn:active { transform: scale(0.95); background-color: #d97706; }
 
-        /* 調整速度拉霸與聽題目控制面板區 */
+        /* 調整速度拉霸與聽題目控制面板區 (已將 step-banner 移至拉霸右側) */
         .top-panel {
             display: flex; justify-content: space-between; align-items: center; width: 100%;
-            background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 10px; padding: 4px 10px;
+            background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 10px; padding: 4px 8px; gap: 6px;
         }
         .slider-box {
-            display: flex; flex-direction: column; align-items: center; gap: 2px;
+            display: flex; flex-direction: column; align-items: center; gap: 2px; flex-shrink: 0;
         }
-        .slider-title { font-size: 11px; font-weight: bold; color: #7c3aed; }
-        .slider-row { display: flex; align-items: center; gap: 6px; }
+        .slider-title { font-size: 10px; font-weight: bold; color: #7c3aed; }
+        .slider-row { display: flex; align-items: center; gap: 4px; }
         
         .slider-row input[type=range] {
-            width: 95px; cursor: pointer; accent-color: #8b5cf6; height: 8px;
+            width: 80px; cursor: pointer; accent-color: #8b5cf6; height: 6px;
         }
         .slider-row input[type=range]::-webkit-slider-thumb {
-            width: 20px; height: 20px; border-radius: 50%;
-            background: #ffffff; border: 3px solid #7c3aed;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            width: 16px; height: 16px; border-radius: 50%;
+            background: #ffffff; border: 2px solid #7c3aed;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
-        .speed-text { font-size: 11px; font-weight: bold; color: #7c3aed; width: 45px; text-align: left; }
+        .speed-text { font-size: 10px; font-weight: bold; color: #7c3aed; width: 38px; text-align: left; }
+
+        /* 步驟/目前題目提示區 (已配置於速度拉霸右側) */
+        .step-banner { 
+            background: #fef3c7; color: #92400e; padding: 4px 6px; border-radius: 6px; 
+            font-size: 11px; font-weight: bold; flex-grow: 1; text-align: center; border: 1px solid #fde68a;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
 
         .listen-action-btn {
             background-color: #0ea5e9; color: white; border: none; border-radius: 8px;
-            padding: 6px 12px; font-size: 12px; font-weight: bold; cursor: pointer;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.15); display: flex; align-items: center; gap: 4px;
+            padding: 5px 10px; font-size: 11px; font-weight: bold; cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.15); display: flex; align-items: center; gap: 3px; flex-shrink: 0;
         }
         .listen-action-btn:active { transform: scale(0.95); background-color: #0284c7; }
 
-        .step-banner { background: #fef3c7; color: #92400e; padding: 6px 10px; border-radius: 8px; font-size: 13px; font-weight: bold; width: 100%; line-height: 1.4; }
-
         .legend-box {
-            display: flex; justify-content: space-around; width: 100%; background: #f8fafc; padding: 4px; border-radius: 8px; font-size: 11px; color: #475569; border: 1px solid #e2e8f0;
+            display: flex; justify-content: space-around; width: 100%; background: #f8fafc; padding: 3px; border-radius: 8px; font-size: 10px; color: #475569; border: 1px solid #e2e8f0;
         }
-        .legend-item { display: flex; align-items: center; gap: 3px; }
+        .legend-item { display: flex; align-items: center; gap: 2px; }
 
         .place-header {
             display: flex; gap: 4px; width: 100%; justify-content: center; font-weight: bold; font-size: 11px; color: #64748b; margin-bottom: -2px;
@@ -108,46 +113,46 @@
         .vertical-math {
             display: inline-flex; flex-direction: column; align-items: center;
             font-size: 22px; font-weight: bold; font-family: monospace;
-            background: #f8fafc; padding: 6px 4px; border-radius: 12px; border: 2px solid #cbd5e1;
+            background: #f8fafc; padding: 4px 4px; border-radius: 12px; border: 2px solid #cbd5e1;
             position: relative; width: 100%; max-width: 420px;
         }
-        .math-row { display: flex; gap: 4px; width: 100%; justify-content: center; align-items: center; margin: 2px 0; }
-        .math-line { width: 92%; height: 3px; background: #333; margin: 3px auto; }
-        .cell { width: 36px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 42px; }
+        .math-row { display: flex; gap: 4px; width: 100%; justify-content: center; align-items: center; margin: 1px 0; }
+        .math-line { width: 92%; height: 3px; background: #333; margin: 2px auto; }
+        .cell { width: 36px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 38px; }
         
-        .operator { position: absolute; left: 6px; top: 72px; font-size: 20px; color: #333; }
+        .operator { position: absolute; left: 6px; top: 62px; font-size: 18px; color: #333; }
 
         .coin-hint {
-            display: flex; flex-wrap: wrap; gap: 1px; justify-content: center; max-width: 34px; margin-top: 2px;
+            display: flex; flex-wrap: wrap; gap: 1px; justify-content: center; max-width: 34px; margin-top: 1px;
         }
         .coin-10000 {
-            width: 10px; height: 10px; background: #0284c7; border-radius: 50%; border: 1px solid #0369a1; font-size: 6px; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: bold;
+            width: 9px; height: 9px; background: #0284c7; border-radius: 50%; border: 1px solid #0369a1; font-size: 5px; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: bold;
         }
         .coin-1000 {
-            width: 10px; height: 10px; background: #7c3aed; border-radius: 50%; border: 1px solid #5b21b6; font-size: 6px; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: bold;
+            width: 9px; height: 9px; background: #7c3aed; border-radius: 50%; border: 1px solid #5b21b6; font-size: 5px; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: bold;
         }
         .coin-100 {
-            width: 10px; height: 10px; background: #dc2626; border-radius: 50%; border: 1px solid #991b1b; font-size: 6px; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: bold;
+            width: 9px; height: 9px; background: #dc2626; border-radius: 50%; border: 1px solid #991b1b; font-size: 5px; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: bold;
         }
         .coin-10 {
-            width: 10px; height: 10px; background: #eab308; border-radius: 50%; border: 1px solid #ca8a04; font-size: 6px; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: bold;
+            width: 9px; height: 9px; background: #eab308; border-radius: 50%; border: 1px solid #ca8a04; font-size: 5px; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: bold;
         }
         .coin-1 {
-            width: 8px; height: 8px; background: #94a3b8; border-radius: 50%; border: 1px solid #64748b;
+            width: 7px; height: 7px; background: #94a3b8; border-radius: 50%; border: 1px solid #64748b;
         }
 
         #drop-game-container {
-            position: relative; width: 100%; height: 110px;
+            position: relative; width: 100%; height: 95px;
             background: #e2e8f0; border: 2px solid #cbd5e1; border-radius: 12px;
             overflow: hidden; touch-action: manipulation;
         }
 
         .falling-tetris {
-            position: absolute; width: 50px; height: 46px;
+            position: absolute; width: 50px; height: 42px;
             background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
             border: 3px solid #facc15; border-radius: 8px;
             display: flex; align-items: center; justify-content: center;
-            font-size: 22px; font-weight: bold; color: #fff;
+            font-size: 20px; font-weight: bold; color: #fff;
             cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
             animation: fall linear forwards; z-index: 999;
         }
@@ -155,7 +160,7 @@
 
         @keyframes fall {
             0% { top: -50px; }
-            100% { top: 60px; }
+            100% { top: 50px; }
         }
     </style>
 </head>
@@ -183,6 +188,7 @@
             <button class="control-btn" id="pauseBtn" onclick="togglePause()">暫停</button>
         </div>
         
+        <!-- 調整速度拉霸、步驟提示區與聽題目按鈕並排於 top-panel 中 -->
         <div class="top-panel">
             <div class="slider-box">
                 <div class="slider-title">調整速度拉霸</div>
@@ -191,10 +197,9 @@
                     <span class="speed-text" id="speedLabel">速度 3</span>
                 </div>
             </div>
+            <div class="step-banner" id="stepBanner">準備開始！</div>
             <button class="listen-action-btn" onclick="speakCurrentQuestion()">🔊 聽題目</button>
         </div>
-
-        <div class="step-banner" id="stepBanner">準備開始！</div>
 
         <div class="legend-box">
             <div class="legend-item"><div class="coin-10000" style="width:11px;height:11px;"></div>萬位</div>
@@ -241,7 +246,7 @@
             </div>
         </div>
 
-        <div id="feedback" style="font-size: 13px; color: #d97706; font-weight: bold; min-height: 20px;"></div>
+        <div id="feedback" style="font-size: 13px; color: #d97706; font-weight: bold; min-height: 18px;"></div>
         
         <div id="drop-game-container"></div>
     </div>
@@ -281,7 +286,6 @@
                 'thousands': `千位數，${th1} 加 ${th2}`,
                 'tenthousands': `萬位數，${tth1} 加 ${tth2}`
             };
-            // 隨時在頂端或點擊時維持主題完整提示
             speak(`題目是，${total1}加${total2}。目前請算，${stepNames[currentStep]}等於多少呢？`);
         }
 
@@ -354,7 +358,6 @@
             document.getElementById('ansTh').innerText = "?";
             document.getElementById('ansTTh').innerText = "?";
 
-            // 五位數題庫：確保萬位數（tth1 與 tth2）均大於 0（不出現 0）
             const questions = [
                 {tth1: 1, th1: 0, h1: 0, t1: 0, u1: 0, tth2: 2, th2: 0, h2: 0, t2: 0, u2: 0}, 
                 {tth1: 2, th1: 2, h1: 0, t1: 0, u1: 0, tth2: 3, th2: 3, h2: 0, t2: 0, u2: 0}, 
@@ -407,8 +410,7 @@
             renderCoins('tDownCoins', t2, '10');
             renderCoins('uDownCoins', u2, '1');
 
-            // 隨時在頂端保持完整題目提示，不會消失
-            document.getElementById('stepBanner').innerText = `【目前題目】${total1} + ${total2} ＝ ? ｜ 步驟一：先算個位數 (${u1} + ${u2})`;
+            document.getElementById('stepBanner').innerText = `${total1}+${total2} ｜ 1:個 (${u1}+${u2})`;
             
             speak(`我們來算算看，${total1}加${total2}。先算個位數，${u1}加${u2}。`, () => {
                 setTimeout(() => {
@@ -477,7 +479,7 @@
                         document.getElementById('feedback').innerText = `🎉 個位數算對了！`;
                         confetti();
 
-                        document.getElementById('stepBanner').innerText = `【目前題目】${total1} + ${total2} ＝ ? ｜ 步驟二：算十位數 (${t1} + ${t2})`;
+                        document.getElementById('stepBanner').innerText = `${total1}+${total2} ｜ 2:十 (${t1}+${t2})`;
 
                         speak(`個位數算對了。接下來算十位數，${t1}加${t2}。`, () => {
                             setTimeout(() => {
@@ -508,7 +510,7 @@
                         document.getElementById('feedback').innerText = `🎉 十位數算對了！接下來算百位數！`;
                         confetti();
 
-                        document.getElementById('stepBanner').innerText = `【目前題目】${total1} + ${total2} ＝ ? ｜ 步驟三：算百位數 (${h1} + ${h2})`;
+                        document.getElementById('stepBanner').innerText = `${total1}+${total2} ｜ 3:百 (${h1}+${h2})`;
 
                         speak(`十位數算對了。接下來算百位數，${h1}加${h2}。`, () => {
                             setTimeout(() => {
@@ -539,7 +541,7 @@
                         document.getElementById('feedback').innerText = `🎉 百位數算對了！接下來算千位數！`;
                         confetti();
 
-                        document.getElementById('stepBanner').innerText = `【目前題目】${total1} + ${total2} ＝ ? ｜ 步驟四：算千位數 (${th1} + ${th2})`;
+                        document.getElementById('stepBanner').innerText = `${total1}+${total2} ｜ 4:千 (${th1}+${th2})`;
 
                         speak(`百位數算對了。接下來算千位數，${th1}加${th2}。`, () => {
                             setTimeout(() => {
@@ -570,7 +572,7 @@
                         document.getElementById('feedback').innerText = `🎉 千位數算對了！最後算萬位數！`;
                         confetti();
 
-                        document.getElementById('stepBanner').innerText = `【目前題目】${total1} + ${total2} ＝ ? ｜ 步驟五：算萬位數 (${tth1} + ${tth2})`;
+                        document.getElementById('stepBanner').innerText = `${total1}+${total2} ｜ 5:萬 (${tth1}+${tth2})`;
 
                         speak(`千位數算對了。最後算萬位數，${tth1}加${tth2}。`, () => {
                             setTimeout(() => {
@@ -604,7 +606,7 @@
                         score++;
                         document.getElementById('score').innerText = `已完成: ${score} 關`;
                         document.getElementById('feedback').innerText = `🌟 太棒了！總和是 ${grandTotal}，恭喜過關！`;
-                        document.getElementById('stepBanner').innerText = `【挑戰成功】${total1} + ${total2} ＝ ${grandTotal}`;
+                        document.getElementById('stepBanner').innerText = `【完成】${total1}+${total2}＝${grandTotal}`;
                         confetti();
 
                         speak(`太棒了，總和是 ${grandTotal}，恭喜過關！`, () => {
