@@ -65,7 +65,6 @@
         }
         .control-btn:active { transform: scale(0.95); background-color: #d97706; }
 
-        /* 調整速度拉霸與聽題目控制面板區 */
         .top-panel {
             display: flex; justify-content: space-between; align-items: center; width: 100%;
             background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 10px; padding: 6px 8px; gap: 6px;
@@ -86,7 +85,6 @@
         }
         .speed-text { font-size: 10px; font-weight: bold; color: #7c3aed; width: 38px; text-align: left; }
 
-        /* 放大後的步驟/目前題目提示區 (字體特別放大，保護視力) */
         .step-banner { 
             background: #fef3c7; color: #92400e; padding: 6px 8px; border-radius: 6px; 
             font-size: 14px; font-weight: bold; flex-grow: 1; text-align: center; border: 1px solid #fde68a;
@@ -173,9 +171,9 @@
                 <div class="intro-card">
                     <h3>📖 遊戲貼心設計說明</h3>
                     <ul>
-                        <li><strong>五位數整數題型：</strong>擴充至 5 位數（包含萬位、千位、百位、十位、個位），由右至左逐一引導[cite: 4]。</li>
-                        <li><strong>速度拉霸與聽題目：</strong>可隨時自由調整掉落速度，並點擊「🔊 聽題目」再次聆聽提示[cite: 4]。</li>
-                        <li><strong>不重複隨機抽題：</strong>每次過關都會隨機換新題目，萬位數永不為 0[cite: 4]！</li>
+                        <li><strong>五位數整數題型：</strong>擴充至 5 位數（包含萬位、千位、百位、十位、個位），由右至左逐一引導。</li>
+                        <li><strong>速度拉霸與聽題目：</strong>可隨時自由調整掉落速度，並點擊「🔊 聽題目」再次聆聽提示。</li>
+                        <li><strong>無限隨機題庫：</strong>每次過關自動隨機產生新題目，萬位數永不為 0，且完全無進位！</li>
                     </ul>
                 </div>
                 <button class="start-btn" onclick="startGame()">🎮 開始遊戲</button>
@@ -188,7 +186,6 @@
             <button class="control-btn" id="pauseBtn" onclick="togglePause()">暫停</button>
         </div>
         
-        <!-- 調整速度拉霸、放大後的步驟提示區與聽題目按鈕並排 -->
         <div class="top-panel">
             <div class="slider-box">
                 <div class="slider-title">調整速度拉霸</div>
@@ -264,7 +261,6 @@
         let isLocked = false;
         let isPaused = false;
         let nextQuestionTimeout = null;
-        let lastQuestionIndex = -1;
 
         function speak(text, callback) {
             if (isPaused) return;
@@ -348,6 +344,7 @@
             }
         }
 
+        // 💡 自動隨機產生無進位五位數加法題目（擁有無限題庫）
         function initQuestion() {
             if (isPaused) return;
             isLocked = false;
@@ -358,27 +355,24 @@
             document.getElementById('ansTh').innerText = "?";
             document.getElementById('ansTTh').innerText = "?";
 
-            const questions = [
-                {tth1: 1, th1: 0, h1: 0, t1: 0, u1: 0, tth2: 2, th2: 0, h2: 0, t2: 0, u2: 0}, 
-                {tth1: 2, th1: 2, h1: 0, t1: 0, u1: 0, tth2: 3, th2: 3, h2: 0, t2: 0, u2: 0}, 
-                {tth1: 4, th1: 0, h1: 2, t1: 0, u1: 0, tth2: 1, th2: 0, h2: 2, t2: 0, u2: 0}, 
-                {tth1: 3, th1: 0, h1: 0, t1: 2, u1: 0, tth2: 5, th2: 0, h2: 0, t2: 2, u2: 0}, 
-                {tth1: 1, th1: 2, h1: 3, t1: 4, u1: 0, tth2: 2, th2: 1, h2: 1, t2: 2, u2: 0}, 
-                {tth1: 3, th1: 4, h1: 1, t1: 5, u1: 0, tth2: 1, th2: 2, h2: 3, t2: 3, u2: 0}, 
-                {tth1: 2, th1: 1, h1: 4, t1: 2, u1: 0, tth2: 3, th2: 2, h2: 2, t2: 1, u2: 0}, 
-                {tth1: 4, th1: 1, h1: 1, t1: 1, u1: 0, tth2: 2, th2: 2, h2: 2, t2: 2, u2: 0}  
-            ];
+            // 1. 萬位數：確保兩數萬位數相加 < 10，且第一個數的萬位數 >= 1（不為0）
+            tth1 = Math.floor(Math.random() * 8) + 1; // 1 到 8
+            let maxTth2 = 9 - tth1;
+            tth2 = Math.floor(Math.random() * (maxTth2 + 1)); // 0 到 maxTth2
 
-            let qIndex;
-            do {
-                qIndex = Math.floor(Math.random() * questions.length);
-            } while (qIndex === lastQuestionIndex && questions.length > 1);
-            lastQuestionIndex = qIndex;
+            // 2. 千位、百位、十位、個位：隨機產生相加小於10的數字
+            th1 = Math.floor(Math.random() * 10);
+            th2 = Math.floor(Math.random() * (10 - th1));
 
-            let q = questions[qIndex];
-            tth1 = q.tth1; th1 = q.th1; h1 = q.h1; t1 = q.t1; u1 = q.u1; 
-            tth2 = q.tth2; th2 = q.th2; h2 = q.h2; t2 = q.t2; u2 = q.u2;
-            
+            h1 = Math.floor(Math.random() * 10);
+            h2 = Math.floor(Math.random() * (10 - h1));
+
+            t1 = Math.floor(Math.random() * 10);
+            t2 = Math.floor(Math.random() * (10 - t1));
+
+            u1 = Math.floor(Math.random() * 10);
+            u2 = Math.floor(Math.random() * (10 - u1));
+
             targetU = u1 + u2;
             targetT = t1 + t2;
             targetH = h1 + h2;
