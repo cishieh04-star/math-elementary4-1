@@ -176,7 +176,7 @@
                     <ul>
                         <li><strong>六位數整數題型：</strong>擴充至 6 位數（包含十萬位、萬位、千位、百位、十位、個位），由右至左逐一引導。</li>
                         <li><strong>速度拉霸與聽題目：</strong>可隨時自由調整掉落速度，並點擊「🔊 聽題目」再次聆聽提示。</li>
-                        <li><strong>嚴格位數控制：</strong>十萬位數永不為 0，且所有位數相加均無進位！</li>
+                        <li><strong>無限隨機題庫：</strong>每次過關自動隨機產生新題目，十萬位數永不為 0，且完全無進位！</li>
                     </ul>
                 </div>
                 <button class="start-btn" onclick="startGame()">🎮 開始遊戲</button>
@@ -269,7 +269,6 @@
         let isLocked = false;
         let isPaused = false;
         let nextQuestionTimeout = null;
-        let lastQuestionIndex = -1;
 
         function speak(text, callback) {
             if (isPaused) return;
@@ -357,6 +356,7 @@
             }
         }
 
+        // 💡 自動隨機產生無進位六位數加法題目（提供無限題庫，讓小朋友充分練習）
         function initQuestion() {
             if (isPaused) return;
             isLocked = false;
@@ -368,27 +368,27 @@
             document.getElementById('ansTTh').innerText = "?";
             document.getElementById('ansHTh').innerText = "?";
 
-            const questions = [
-                {hth1: 1, tth1: 1, th1: 0, h1: 0, t1: 1, u1: 0, hth2: 2, tth2: 3, th2: 0, h2: 0, t2: 2, u2: 0}, 
-                {hth1: 3, tth1: 2, th1: 1, h1: 0, t1: 0, u1: 0, hth2: 4, tth2: 1, th2: 2, h2: 0, t2: 0, u2: 0}, 
-                {hth1: 2, tth1: 0, th1: 3, h1: 1, t1: 0, u1: 0, hth2: 3, tth2: 0, th2: 2, h2: 2, t2: 0, u2: 0}, 
-                {hth1: 1, tth1: 3, th1: 0, h1: 0, t1: 2, u1: 0, hth2: 5, tth2: 2, th2: 0, h2: 0, t2: 3, u2: 0}, 
-                {hth1: 2, tth1: 1, th1: 2, h1: 3, t1: 1, u1: 0, hth2: 3, tth2: 2, th2: 1, h2: 1, t2: 2, u2: 0}, 
-                {hth1: 4, tth1: 2, th1: 1, h1: 2, t1: 3, u1: 0, hth2: 1, tth2: 3, th2: 2, h2: 1, t2: 1, u2: 0}, 
-                {hth1: 3, tth1: 1, th1: 4, h1: 2, t1: 1, u1: 0, hth2: 2, tth2: 3, th2: 2, h2: 2, t2: 2, u2: 0}, 
-                {hth1: 5, tth1: 2, th1: 1, h1: 1, t1: 2, u1: 0, hth2: 1, tth2: 1, th2: 2, h2: 2, t2: 1, u2: 0}  
-            ];
+            // 1. 十萬位數：確保兩數十萬位數相加 < 10，且第一個數的十萬位數 >= 1（不為0）
+            hth1 = Math.floor(Math.random() * 8) + 1; // 1 到 8
+            let maxHth2 = 9 - hth1;
+            hth2 = Math.floor(Math.random() * (maxHth2 + 1)); // 0 到 maxHth2
 
-            let qIndex;
-            do {
-                qIndex = Math.floor(Math.random() * questions.length);
-            } while (qIndex === lastQuestionIndex && questions.length > 1);
-            lastQuestionIndex = qIndex;
+            // 2. 萬位、千位、百位、十位、個位：隨機產生相加小於10的數字
+            tth1 = Math.floor(Math.random() * 10);
+            tth2 = Math.floor(Math.random() * (10 - tth1));
 
-            let q = questions[qIndex];
-            hth1 = q.hth1; tth1 = q.tth1; th1 = q.th1; h1 = q.h1; t1 = q.t1; u1 = q.u1; 
-            hth2 = q.hth2; tth2 = q.tth2; th2 = q.th2; h2 = q.h2; t2 = q.t2; u2 = q.u2;
-            
+            th1 = Math.floor(Math.random() * 10);
+            th2 = Math.floor(Math.random() * (10 - th1));
+
+            h1 = Math.floor(Math.random() * 10);
+            h2 = Math.floor(Math.random() * (10 - h1));
+
+            t1 = Math.floor(Math.random() * 10);
+            t2 = Math.floor(Math.random() * (10 - t1));
+
+            u1 = Math.floor(Math.random() * 10);
+            u2 = Math.floor(Math.random() * (10 - u1));
+
             targetU = u1 + u2;
             targetT = t1 + t2;
             targetH = h1 + h2;
