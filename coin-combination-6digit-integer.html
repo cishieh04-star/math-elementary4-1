@@ -14,12 +14,12 @@
             display: flex; flex-direction: column; align-items: center; justify-content: center; 
             overflow: hidden; touch-action: manipulation; 
         }
-        h1 { color: #b45309; font-size: 16px; margin: 3px 0; }
+        h1 { color: #b45309; font-size: 15px; margin: 2px 0; }
         
         #gameScreen { 
-            width: 100%; max-width: 560px; height: 97vh; max-height: 840px;
+            width: 100%; max-width: 580px; height: 97vh; max-height: 840px;
             display: flex; flex-direction: column; align-items: center; justify-content: space-between; 
-            background: #fff; border-radius: 16px; border: 3px solid #f59e0b; padding: 8px; 
+            background: #fff; border-radius: 16px; border: 3px solid #f59e0b; padding: 6px; 
             box-shadow: 0 4px 12px rgba(0,0,0,0.1); margin: auto;
             position: relative;
         }
@@ -54,111 +54,114 @@
         
         .status-bar { 
             display: flex; justify-content: space-between; align-items: center; 
-            width: 100%; font-size: 15px; font-weight: bold; color: #b45309; 
-            border-bottom: 2px solid #fef3c7; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; 
+            width: 100%; font-size: 14px; font-weight: bold; color: #b45309; 
+            border-bottom: 2px solid #fef3c7; padding-bottom: 3px; padding-left: 5px; padding-right: 5px; 
         }
 
         .control-btn {
             background-color: #f59e0b; color: white; border: none; border-radius: 8px;
-            padding: 4px 10px; font-size: 13px; font-weight: bold; cursor: pointer;
+            padding: 4px 10px; font-size: 12px; font-weight: bold; cursor: pointer;
             box-shadow: 0 2px 4px rgba(0,0,0,0.15);
         }
         .control-btn:active { transform: scale(0.95); background-color: #d97706; }
 
-        /* 調整速度拉霸與聽題目控制面板區 */
         .top-panel {
             display: flex; justify-content: space-between; align-items: center; width: 100%;
-            background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 10px; padding: 4px 10px;
+            background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 10px; padding: 6px 8px; gap: 6px;
         }
         .slider-box {
-            display: flex; flex-direction: column; align-items: center; gap: 2px;
+            display: flex; flex-direction: column; align-items: center; gap: 2px; flex-shrink: 0;
         }
-        .slider-title { font-size: 11px; font-weight: bold; color: #7c3aed; }
-        .slider-row { display: flex; align-items: center; gap: 6px; }
+        .slider-title { font-size: 10px; font-weight: bold; color: #7c3aed; }
+        .slider-row { display: flex; align-items: center; gap: 4px; }
         
         .slider-row input[type=range] {
-            width: 95px; cursor: pointer; accent-color: #8b5cf6; height: 8px;
+            width: 75px; cursor: pointer; accent-color: #8b5cf6; height: 6px;
         }
         .slider-row input[type=range]::-webkit-slider-thumb {
-            width: 20px; height: 20px; border-radius: 50%;
-            background: #ffffff; border: 3px solid #7c3aed;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            width: 16px; height: 16px; border-radius: 50%;
+            background: #ffffff; border: 2px solid #7c3aed;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
-        .speed-text { font-size: 11px; font-weight: bold; color: #7c3aed; width: 45px; text-align: left; }
+        .speed-text { font-size: 10px; font-weight: bold; color: #7c3aed; width: 38px; text-align: left; }
+
+        .step-banner { 
+            background: #fef3c7; color: #92400e; padding: 6px 8px; border-radius: 6px; 
+            font-size: 13px; font-weight: bold; flex-grow: 1; text-align: center; border: 1px solid #fde68a;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
 
         .listen-action-btn {
             background-color: #0ea5e9; color: white; border: none; border-radius: 8px;
-            padding: 6px 12px; font-size: 12px; font-weight: bold; cursor: pointer;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.15); display: flex; align-items: center; gap: 4px;
+            padding: 8px 10px; font-size: 12px; font-weight: bold; cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.15); display: flex; align-items: center; gap: 3px; flex-shrink: 0;
         }
         .listen-action-btn:active { transform: scale(0.95); background-color: #0284c7; }
 
-        .step-banner { background: #fef3c7; color: #92400e; padding: 5px 10px; border-radius: 8px; font-size: 12px; font-weight: bold; width: 100%; line-height: 1.4; }
-
         .legend-box {
-            display: flex; justify-content: space-around; width: 100%; background: #f8fafc; padding: 3px; border-radius: 8px; font-size: 10px; color: #475569; border: 1px solid #e2e8f0;
+            display: flex; justify-content: space-around; width: 100%; background: #f8fafc; padding: 3px; border-radius: 8px; font-size: 9px; color: #475569; border: 1px solid #e2e8f0;
         }
         .legend-item { display: flex; align-items: center; gap: 2px; }
 
         .place-header {
-            display: flex; gap: 3px; width: 100%; justify-content: center; font-weight: bold; font-size: 10px; color: #64748b; margin-bottom: -2px;
+            display: flex; gap: 2px; width: 100%; justify-content: center; font-weight: bold; font-size: 10px; color: #64748b; margin-bottom: -2px;
         }
-        .place-col { width: 31px; text-align: center; }
+        .place-col { width: 30px; text-align: center; }
 
         .vertical-math {
             display: inline-flex; flex-direction: column; align-items: center;
             font-size: 20px; font-weight: bold; font-family: monospace;
-            background: #f8fafc; padding: 6px 2px; border-radius: 12px; border: 2px solid #cbd5e1;
+            background: #f8fafc; padding: 6px 4px; border-radius: 12px; border: 2px solid #cbd5e1;
             position: relative; width: 100%; max-width: 440px;
         }
-        .math-row { display: flex; gap: 3px; width: 100%; justify-content: center; align-items: center; margin: 2px 0; }
+        .math-row { display: flex; gap: 2px; width: 100%; justify-content: center; align-items: center; margin: 1px 0; }
         .math-line { width: 94%; height: 3px; background: #333; margin: 3px auto; }
-        .cell { width: 31px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 40px; }
+        .cell { width: 30px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 36px; }
         
-        .operator { position: absolute; left: 4px; top: 70px; font-size: 18px; color: #333; }
+        .operator { position: absolute; left: 6px; top: 66px; font-size: 16px; color: #333; }
 
         .coin-hint {
-            display: flex; flex-wrap: wrap; gap: 1px; justify-content: center; max-width: 29px; margin-top: 1px;
+            display: flex; flex-wrap: wrap; gap: 1px; justify-content: center; max-width: 28px; margin-top: 1px;
         }
         .coin-100000 {
-            width: 9px; height: 9px; background: #047857; border-radius: 50%; border: 1px solid #065f46; font-size: 5px; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: bold;
+            width: 8px; height: 8px; background: #2563eb; border-radius: 50%; border: 1px solid #1d4ed8; font-size: 4px; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: bold;
         }
         .coin-10000 {
-            width: 9px; height: 9px; background: #0284c7; border-radius: 50%; border: 1px solid #0369a1; font-size: 5px; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: bold;
+            width: 8px; height: 8px; background: #0284c7; border-radius: 50%; border: 1px solid #0369a1; font-size: 4px; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: bold;
         }
         .coin-1000 {
-            width: 9px; height: 9px; background: #7c3aed; border-radius: 50%; border: 1px solid #5b21b6; font-size: 5px; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: bold;
+            width: 8px; height: 8px; background: #7c3aed; border-radius: 50%; border: 1px solid #5b21b6; font-size: 4px; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: bold;
         }
         .coin-100 {
-            width: 9px; height: 9px; background: #dc2626; border-radius: 50%; border: 1px solid #991b1b; font-size: 5px; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: bold;
+            width: 8px; height: 8px; background: #dc2626; border-radius: 50%; border: 1px solid #991b1b; font-size: 4px; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: bold;
         }
         .coin-10 {
-            width: 9px; height: 9px; background: #eab308; border-radius: 50%; border: 1px solid #ca8a04; font-size: 5px; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: bold;
+            width: 8px; height: 8px; background: #eab308; border-radius: 50%; border: 1px solid #ca8a04; font-size: 4px; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: bold;
         }
         .coin-1 {
-            width: 7px; height: 7px; background: #94a3b8; border-radius: 50%; border: 1px solid #64748b;
+            width: 6px; height: 6px; background: #94a3b8; border-radius: 50%; border: 1px solid #64748b;
         }
 
         #drop-game-container {
-            position: relative; width: 100%; height: 105px;
+            position: relative; width: 100%; height: 85px;
             background: #e2e8f0; border: 2px solid #cbd5e1; border-radius: 12px;
             overflow: hidden; touch-action: manipulation;
         }
 
         .falling-tetris {
-            position: absolute; width: 48px; height: 44px;
+            position: absolute; width: 45px; height: 38px;
             background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
             border: 3px solid #facc15; border-radius: 8px;
             display: flex; align-items: center; justify-content: center;
-            font-size: 20px; font-weight: bold; color: #fff;
+            font-size: 18px; font-weight: bold; color: #fff;
             cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
             animation: fall linear forwards; z-index: 999;
         }
         .falling-tetris:active { transform: scale(0.9); }
 
         @keyframes fall {
-            0% { top: -50px; }
-            100% { top: 55px; }
+            0% { top: -45px; }
+            100% { top: 45px; }
         }
     </style>
 </head>
@@ -167,20 +170,20 @@
     <div id="gameScreen">
         <div id="startOverlay">
             <div class="start-content-box">
-                <h2>🪙 六位數加法俄羅斯方塊樂 🪙</h2>
+                <h2>🪙 六位數加法互動遊戲(無進位)</h2>
                 <div class="intro-card">
-                    <h3>📖 特教貼心設計說明</h3>
+                    <h3>📖 遊戲貼心設計說明</h3>
                     <ul>
                         <li><strong>六位數整數題型：</strong>擴充至 6 位數（包含十萬位、萬位、千位、百位、十位、個位），由右至左逐一引導。</li>
                         <li><strong>速度拉霸與聽題目：</strong>可隨時自由調整掉落速度，並點擊「🔊 聽題目」再次聆聽提示。</li>
-                        <li><strong>不重複隨機抽題：</strong>每次過關都會隨機換新題目，題目豐富多元！</li>
+                        <li><strong>嚴格位數控制：</strong>十萬位數永不為 0，且所有位數相加均無進位！</li>
                     </ul>
                 </div>
                 <button class="start-btn" onclick="startGame()">🎮 開始遊戲</button>
             </div>
         </div>
 
-        <h1>🪙 六位數加法俄羅斯方塊樂</h1>
+        <h1>🪙 六位數加法互動遊戲(無進位)</h1>
         <div class="status-bar">
             <div id="score">已完成: 0 關</div>
             <button class="control-btn" id="pauseBtn" onclick="togglePause()">暫停</button>
@@ -194,17 +197,16 @@
                     <span class="speed-text" id="speedLabel">速度 3</span>
                 </div>
             </div>
+            <div class="step-banner" id="stepBanner">準備開始！</div>
             <button class="listen-action-btn" onclick="speakCurrentQuestion()">🔊 聽題目</button>
         </div>
 
-        <div class="step-banner" id="stepBanner">準備開始！</div>
-
         <div class="legend-box">
-            <div class="legend-item"><div class="coin-100000" style="width:10px;height:10px;"></div>十萬</div>
-            <div class="legend-item"><div class="coin-10000" style="width:10px;height:10px;"></div>萬位</div>
-            <div class="legend-item"><div class="coin-1000" style="width:10px;height:10px;"></div>千位</div>
-            <div class="legend-item"><div class="coin-100" style="width:10px;height:10px;"></div>百位</div>
-            <div class="legend-item"><div class="coin-10" style="width:10px;height:10px;"></div>十位</div>
+            <div class="legend-item"><div class="coin-100000" style="width:9px;height:9px;"></div>十萬</div>
+            <div class="legend-item"><div class="coin-10000" style="width:9px;height:9px;"></div>萬位</div>
+            <div class="legend-item"><div class="coin-1000" style="width:9px;height:9px;"></div>千位</div>
+            <div class="legend-item"><div class="coin-100" style="width:9px;height:9px;"></div>百位</div>
+            <div class="legend-item"><div class="coin-10" style="width:9px;height:9px;"></div>十位</div>
         </div>
 
         <div class="vertical-math" id="mathBox">
@@ -220,7 +222,7 @@
             </div>
 
             <div class="math-row">
-                <div class="cell"><span id="htthUp">0</span><div class="coin-hint" id="htthUpCoins"></div></div>
+                <div class="cell"><span id="hthUp">0</span><div class="coin-hint" id="hthUpCoins"></div></div>
                 <div class="cell"><span id="tthUp">0</span><div class="coin-hint" id="tthUpCoins"></div></div>
                 <div class="cell"><span id="thUp">0</span><div class="coin-hint" id="thUpCoins"></div></div>
                 <div class="cell"><span id="hUp">0</span><div class="coin-hint" id="hUpCoins"></div></div>
@@ -229,7 +231,7 @@
             </div>
             
             <div class="math-row">
-                <div class="cell"><span id="htthDown">0</span><div class="coin-hint" id="htthDownCoins"></div></div>
+                <div class="cell"><span id="hthDown">0</span><div class="coin-hint" id="hthDownCoins"></div></div>
                 <div class="cell"><span id="tthDown">0</span><div class="coin-hint" id="tthDownCoins"></div></div>
                 <div class="cell"><span id="thDown">0</span><div class="coin-hint" id="thDownCoins"></div></div>
                 <div class="cell"><span id="hDown">0</span><div class="coin-hint" id="hDownCoins"></div></div>
@@ -240,7 +242,7 @@
             <div class="math-line"></div>
             
             <div class="math-row">
-                <div class="cell" id="ansHTTh">?</div>
+                <div class="cell" id="ansHTh">?</div>
                 <div class="cell" id="ansTTh">?</div>
                 <div class="cell" id="ansTh">?</div>
                 <div class="cell" id="ansH">?</div>
@@ -249,16 +251,16 @@
             </div>
         </div>
 
-        <div id="feedback" style="font-size: 13px; color: #d97706; font-weight: bold; min-height: 20px;"></div>
+        <div id="feedback" style="font-size: 12px; color: #d97706; font-weight: bold; min-height: 16px;"></div>
         
         <div id="drop-game-container"></div>
     </div>
 
     <script>
         let score = 0;
-        let htth1 = 0, tth1 = 0, th1 = 0, h1 = 0, t1 = 2, u1 = 0;
-        let htth2 = 0, tth2 = 0, th2 = 0, h2 = 0, t2 = 2, u2 = 0;
-        let targetU = 0, targetT = 4, targetH = 0, targetTh = 0, targetTTh = 0, targetHTTh = 0; 
+        let hth1 = 1, tth1 = 0, th1 = 0, h1 = 0, t1 = 1, u1 = 0;
+        let hth2 = 2, tth2 = 0, th2 = 0, h2 = 0, t2 = 1, u2 = 0;
+        let targetU = 0, targetT = 2, targetH = 0, targetTh = 0, targetTTh = 0, targetHTh = 3; 
         let total1 = 0, total2 = 0;
         let currentStep = 'unit'; 
         let currentSpeedVal = 3; 
@@ -282,15 +284,15 @@
         }
 
         function speakCurrentQuestion() {
-            let stepPrompts = {
-                'unit': `個位數，${u1} 加 ${u2} 是多少？`,
-                'tens': `十位數，${t1} 加 ${t2} 是多少？`,
-                'hundreds': `百位數，${h1} 加 ${h2} 是多少？`,
-                'thousands': `千位數，${th1} 加 ${th2} 是多少？`,
-                'tenthousands': `萬位數，${tth1} 加 ${tth2} 是多少？`,
-                'hundredthousands': `十萬位數，${htth1} 加 ${htth2} 是多少？`
+            let stepNames = {
+                'unit': `個位數，${u1} 加 ${u2}`,
+                'tens': `十位數，${t1} 加 ${t2}`,
+                'hundreds': `百位數，${h1} 加 ${h2}`,
+                'thousands': `千位數，${th1} 加 ${th2}`,
+                'tenthousands': `萬位數，${tth1} 加 ${tth2}`,
+                'hundredthousands': `十萬位數，${hth1} 加 ${hth2}`
             };
-            speak(`數字是 ${total1} 加 ${total2}。請算，${stepPrompts[currentStep]}`);
+            speak(`題目是，${total1}加${total2}。目前請算，${stepNames[currentStep]}等於多少呢？`);
         }
 
         function updateSpeed(val) {
@@ -364,17 +366,17 @@
             document.getElementById('ansH').innerText = "?";
             document.getElementById('ansTh').innerText = "?";
             document.getElementById('ansTTh').innerText = "?";
-            document.getElementById('ansHTTh').innerText = "?";
+            document.getElementById('ansHTh').innerText = "?";
 
-            // 六位數加法題庫（涵蓋十萬位至個位組合）
             const questions = [
-                {htth1: 1, tth1: 0, th1: 0, h1: 0, t1: 0, u1: 0, htth2: 2, tth2: 0, th2: 0, h2: 0, t2: 0, u2: 0}, 
-                {htth1: 0, tth1: 2, th1: 0, h1: 0, t1: 0, u1: 0, htth2: 0, tth2: 3, th2: 0, h2: 0, t2: 0, u2: 0}, 
-                {htth1: 0, tth1: 0, th1: 2, h1: 0, t1: 0, u1: 0, htth2: 0, tth2: 0, th2: 2, h2: 0, t2: 0, u2: 0}, 
-                {htth1: 1, tth1: 2, th1: 3, h1: 4, t1: 5, u1: 0, htth2: 2, tth2: 1, th2: 1, h2: 2, t2: 3, u2: 0}, 
-                {htth1: 3, tth1: 4, th1: 1, h1: 0, t1: 5, u1: 0, htth2: 1, tth2: 2, th2: 3, h2: 0, t2: 2, u2: 0}, 
-                {htth1: 2, tth1: 1, th1: 0, h1: 4, t1: 0, u1: 0, htth2: 3, tth2: 2, th2: 0, h2: 2, t2: 0, u2: 0}, 
-                {htth1: 1, tth1: 1, th1: 1, h1: 1, t1: 1, u1: 0, htth2: 2, tth2: 2, th2: 2, h2: 2, t2: 2, u2: 0}  
+                {hth1: 1, tth1: 1, th1: 0, h1: 0, t1: 1, u1: 0, hth2: 2, tth2: 3, th2: 0, h2: 0, t2: 2, u2: 0}, 
+                {hth1: 3, tth1: 2, th1: 1, h1: 0, t1: 0, u1: 0, hth2: 4, tth2: 1, th2: 2, h2: 0, t2: 0, u2: 0}, 
+                {hth1: 2, tth1: 0, th1: 3, h1: 1, t1: 0, u1: 0, hth2: 3, tth2: 0, th2: 2, h2: 2, t2: 0, u2: 0}, 
+                {hth1: 1, tth1: 3, th1: 0, h1: 0, t1: 2, u1: 0, hth2: 5, tth2: 2, th2: 0, h2: 0, t2: 3, u2: 0}, 
+                {hth1: 2, tth1: 1, th1: 2, h1: 3, t1: 1, u1: 0, hth2: 3, tth2: 2, th2: 1, h2: 1, t2: 2, u2: 0}, 
+                {hth1: 4, tth1: 2, th1: 1, h1: 2, t1: 3, u1: 0, hth2: 1, tth2: 3, th2: 2, h2: 1, t2: 1, u2: 0}, 
+                {hth1: 3, tth1: 1, th1: 4, h1: 2, t1: 1, u1: 0, hth2: 2, tth2: 3, th2: 2, h2: 2, t2: 2, u2: 0}, 
+                {hth1: 5, tth1: 2, th1: 1, h1: 1, t1: 2, u1: 0, hth2: 1, tth2: 1, th2: 2, h2: 2, t2: 1, u2: 0}  
             ];
 
             let qIndex;
@@ -384,51 +386,50 @@
             lastQuestionIndex = qIndex;
 
             let q = questions[qIndex];
-            htth1 = q.htth1; tth1 = q.tth1; th1 = q.th1; h1 = q.h1; t1 = q.t1; u1 = q.u1; 
-            htth2 = q.htth2; tth2 = q.tth2; th2 = q.th2; h2 = q.h2; t2 = q.t2; u2 = q.u2;
+            hth1 = q.hth1; tth1 = q.tth1; th1 = q.th1; h1 = q.h1; t1 = q.t1; u1 = q.u1; 
+            hth2 = q.hth2; tth2 = q.tth2; th2 = q.th2; h2 = q.h2; t2 = q.t2; u2 = q.u2;
             
             targetU = u1 + u2;
             targetT = t1 + t2;
             targetH = h1 + h2;
             targetTh = th1 + th2;
             targetTTh = tth1 + tth2;
-            targetHTTh = htth1 + htth2;
+            targetHTh = hth1 + hth2;
 
-            total1 = htth1 * 100000 + tth1 * 10000 + th1 * 1000 + h1 * 100 + t1 * 10 + u1;
-            total2 = htth2 * 100000 + tth2 * 10000 + th2 * 1000 + h2 * 100 + t2 * 10 + u2;
+            total1 = hth1 * 100000 + tth1 * 10000 + th1 * 1000 + h1 * 100 + t1 * 10 + u1;
+            total2 = hth2 * 100000 + tth2 * 10000 + th2 * 1000 + h2 * 100 + t2 * 10 + u2;
 
-            document.getElementById('htthUp').innerText = htth1;
+            document.getElementById('hthUp').innerText = hth1;
             document.getElementById('tthUp').innerText = tth1;
             document.getElementById('thUp').innerText = th1;
             document.getElementById('hUp').innerText = h1;
             document.getElementById('tUp').innerText = t1;
             document.getElementById('uUp').innerText = u1;
-            document.getElementById('htthDown').innerText = htth2;
+            document.getElementById('hthDown').innerText = hth2;
             document.getElementById('tthDown').innerText = tth2;
             document.getElementById('thDown').innerText = th2;
             document.getElementById('hDown').innerText = h2;
             document.getElementById('tDown').innerText = t2;
             document.getElementById('uDown').innerText = u2;
 
-            renderCoins('htthUpCoins', htth1, '100000');
+            renderCoins('hthUpCoins', hth1, '100000');
             renderCoins('tthUpCoins', tth1, '10000');
             renderCoins('thUpCoins', th1, '1000');
             renderCoins('hUpCoins', h1, '100');
             renderCoins('tUpCoins', t1, '10');
             renderCoins('uUpCoins', u1, '1');
-            renderCoins('htthDownCoins', htth2, '100000');
+            renderCoins('hthDownCoins', hth2, '100000');
             renderCoins('tthDownCoins', tth2, '10000');
             renderCoins('thDownCoins', th2, '1000');
             renderCoins('hDownCoins', h2, '100');
             renderCoins('tDownCoins', t2, '10');
             renderCoins('uDownCoins', u2, '1');
 
-            document.getElementById('stepBanner').innerText = `題目：${total1} 加 ${total2} 等於多少呢？`;
+            document.getElementById('stepBanner').innerText = `${total1} + ${total2} ｜ 1:個 (${u1}+${u2})`;
             
             speak(`我們來算算看，${total1}加${total2}。先算個位數，${u1}加${u2}。`, () => {
                 setTimeout(() => {
                     if (isPaused) return;
-                    document.getElementById('stepBanner').innerText = `步驟一：先算個位數，${u1} 加上 ${u2} 是多少？`;
                     setupFalling();
                 }, 400);
             });
@@ -446,7 +447,7 @@
             else if (currentStep === 'hundreds') currentTarget = targetH;
             else if (currentStep === 'thousands') currentTarget = targetTh;
             else if (currentStep === 'tenthousands') currentTarget = targetTTh;
-            else currentTarget = targetHTTh;
+            else currentTarget = targetHTh;
 
             let options = [currentTarget];
             while (options.length < 4) {
@@ -471,7 +472,7 @@
             el.className = 'falling-tetris';
             el.innerText = val;
 
-            const randomX = Math.random() * (container.clientWidth - 48);
+            const randomX = Math.random() * (container.clientWidth - 45);
             el.style.left = randomX + 'px';
             
             let duration = 12.0 - (currentSpeedVal * 1.1);
@@ -494,13 +495,14 @@
                         document.getElementById('feedback').innerText = `🎉 個位數算對了！`;
                         confetti();
 
+                        document.getElementById('stepBanner').innerText = `${total1} + ${total2} ｜ 2:十 (${t1}+${t2})`;
+
                         speak(`個位數算對了。接下來算十位數，${t1}加${t2}。`, () => {
                             setTimeout(() => {
                                 if (isPaused) return;
                                 document.getElementById('feedback').innerText = `接下來算十位數！`;
                                 isLocked = false;
                                 currentStep = 'tens';
-                                document.getElementById('stepBanner').innerText = `步驟二：算十位數，${t1} 加上 ${t2} 是多少？`;
                                 setupFalling();
                             }, 1000);
                         });
@@ -524,13 +526,14 @@
                         document.getElementById('feedback').innerText = `🎉 十位數算對了！接下來算百位數！`;
                         confetti();
 
+                        document.getElementById('stepBanner').innerText = `${total1} + ${total2} ｜ 3:百 (${h1}+${h2})`;
+
                         speak(`十位數算對了。接下來算百位數，${h1}加${h2}。`, () => {
                             setTimeout(() => {
                                 if (isPaused) return;
                                 document.getElementById('feedback').innerText = `接下來算百位數！`;
                                 isLocked = false;
                                 currentStep = 'hundreds';
-                                document.getElementById('stepBanner').innerText = `步驟三：算百位數，${h1} 加上 ${h2} 是多少？`;
                                 setupFalling();
                             }, 1000);
                         });
@@ -554,13 +557,14 @@
                         document.getElementById('feedback').innerText = `🎉 百位數算對了！接下來算千位數！`;
                         confetti();
 
+                        document.getElementById('stepBanner').innerText = `${total1} + ${total2} ｜ 4:千 (${th1}+${th2})`;
+
                         speak(`百位數算對了。接下來算千位數，${th1}加${th2}。`, () => {
                             setTimeout(() => {
                                 if (isPaused) return;
                                 document.getElementById('feedback').innerText = `接下來算千位數！`;
                                 isLocked = false;
                                 currentStep = 'thousands';
-                                document.getElementById('stepBanner').innerText = `步驟四：算千位數，${th1} 加上 ${th2} 是多少？`;
                                 setupFalling();
                             }, 1000);
                         });
@@ -584,13 +588,14 @@
                         document.getElementById('feedback').innerText = `🎉 千位數算對了！接下來算萬位數！`;
                         confetti();
 
+                        document.getElementById('stepBanner').innerText = `${total1} + ${total2} ｜ 5:萬 (${tth1}+${tth2})`;
+
                         speak(`千位數算對了。接下來算萬位數，${tth1}加${tth2}。`, () => {
                             setTimeout(() => {
                                 if (isPaused) return;
                                 document.getElementById('feedback').innerText = `接下來算萬位數！`;
                                 isLocked = false;
                                 currentStep = 'tenthousands';
-                                document.getElementById('stepBanner').innerText = `步驟五：算萬位數，${tth1} 加上 ${tth2} 是多少？`;
                                 setupFalling();
                             }, 1000);
                         });
@@ -614,13 +619,14 @@
                         document.getElementById('feedback').innerText = `🎉 萬位數算對了！最後算十萬位數！`;
                         confetti();
 
-                        speak(`萬位數算對了。最後算十萬位數，${htth1}加${htth2}。`, () => {
+                        document.getElementById('stepBanner').innerText = `${total1} + ${total2} ｜ 6:十萬 (${hth1}+${hth2})`;
+
+                        speak(`萬位數算對了。最後算十萬位數，${hth1}加${hth2}。`, () => {
                             setTimeout(() => {
                                 if (isPaused) return;
                                 document.getElementById('feedback').innerText = `最後算十萬位數！`;
                                 isLocked = false;
                                 currentStep = 'hundredthousands';
-                                document.getElementById('stepBanner').innerText = `步驟六：算十萬位數，${htth1} 加上 ${htth2} 是多少？`;
                                 setupFalling();
                             }, 1000);
                         });
@@ -634,22 +640,23 @@
                     }
 
                 } else {
-                    if (val === targetHTTh) {
+                    if (val === targetHTh) {
                         isHandled = true;
                         isLocked = true;
                         if (gameInterval) clearInterval(gameInterval);
                         activeOptions.forEach(opt => opt.remove());
 
-                        document.getElementById('ansHTTh').innerText = targetHTTh;
+                        document.getElementById('ansHTh').innerText = targetHTh;
 
-                        let grandTotal = (htth1 + htth2) * 100000 + (tth1 + tth2) * 10000 + (th1 + th2) * 1000 + (h1 + h2) * 100 + (t1 + t2) * 10 + (u1 + u2);
+                        let grandTotal = total1 + total2;
 
                         score++;
                         document.getElementById('score').innerText = `已完成: ${score} 關`;
-                        document.getElementById('feedback').innerText = `🌟 太棒了！總金額是 ${grandTotal} 元，恭喜過關！`;
+                        document.getElementById('feedback').innerText = `🌟 太棒了！總和是 ${grandTotal}，恭喜過關！`;
+                        document.getElementById('stepBanner').innerText = `${total1}+${total2}＝${grandTotal} (過關)`;
                         confetti();
 
-                        speak(`太棒了，總金額是 ${grandTotal} 元，恭喜過關！`, () => {
+                        speak(`太棒了，總和是 ${grandTotal}，恭喜過關！`, () => {
                             if (nextQuestionTimeout) clearTimeout(nextQuestionTimeout);
                             nextQuestionTimeout = setTimeout(() => {
                                 if (!isPaused) initQuestion();
@@ -658,7 +665,7 @@
 
                     } else {
                         isHandled = true;
-                        speak(`再想一想，${htth1}加${htth2}是多少呢？`);
+                        speak(`再想一想，${hth1}加${hth2}是多少呢？`);
                         document.getElementById('feedback').innerText = "❌ 不對喔，再試一次！";
                         el.style.opacity = "0";
                         setTimeout(() => el.remove(), 300);
