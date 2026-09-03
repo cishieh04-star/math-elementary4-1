@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小四上數學互動遊戲</title>
+    
+    <!-- 強制通訊軟體（如 LINE）抓取正確的標題與說明，避免殘留舊的字樣 -->
+    <meta property="og:title" content="小四上數學互動遊戲">
+    <meta property="og:description" content="請選擇下列課程遊戲單元">
+    <meta property="og:type" content="website">
+
+    <style>
+        body { 
+            font-family: "Helvetica Neue", Arial, sans-serif; 
+            padding: 20px; 
+            max-width: 1200px; 
+            margin: auto; 
+            background-color: #9c978a; 
+        }
+
+        /* 統一的按鈕樣式類別 */
+        .box {
+            padding: 12px 10px; /* 稍微縮小左右內距避免字被擠壓 */
+            margin: 10px 0;
+            border-radius: 8px;
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            box-sizing: border-box;
+        }
+
+        /* 階層 1：深藍底白字標題 */
+        .header-box { 
+            background: #0b0573; color: #ffffff; 
+            font-size: 1.5em; margin-bottom: 20px;
+            justify-content: center;
+            text-align: center;
+        }
+        
+        /* 階層 2：黃底黑字副標題 */
+        .category-box { 
+            background: #f1c40f; color: #000000; 
+            font-size: 1.1em; width: fit-content; margin: 10px auto; 
+            justify-content: center;
+            text-align: center;
+        }
+        
+        /* 階層 3：橘色按鈕 Grid 佈局 */
+        ul { 
+            list-style-type: none; 
+            padding: 0; 
+            display: grid; 
+            /* 彈性自動適應不同裝置螢幕大小，保持整齊 */
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 15px; 
+        }
+     
+        .game-link { 
+            background: #d35400; color: #ffffff; 
+            font-size: 1.1em; 
+            transition: transform 0.2s;
+            height: 100%; 
+            margin: 0;
+            /* 讓文字靠左對齊並保留舒適的左側間距 */
+            justify-content: flex-start;
+            padding-left: 20px;
+        }
+        .game-link:hover { transform: scale(1.02); }
+
+        a { text-decoration: none; color: inherit; width: 100%; }
+
+        /* RWD 微調：如果是在直立的小螢幕手機上觀看，字體自動縮小以防破版 */
+        @media (max-width: 768px) {
+            .game-link { font-size: 0.9em; padding: 10px 15px; }
+            ul { gap: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="box header-box">小四上數學互動遊戲</div>
+    <div class="box category-box">請選擇下列課程遊戲單元</div>
+
+    <ul id="game-list"></ul>
+
+    <script>
+        const version = "1"; // 更新版本號以防快取
+        const games = [
+            { name: "1. 99,999以內的數：教科書定位板解密", file: "number-99999-place.html" },
+            { name: "2. 一億以內的數：教科書定位板解密", file: "number-100m-place.html" }
+            /* 如果您還有其他小四上的遊戲檔案，可以依照下方格式繼續擴充：
+               { name: "3. 遊戲名稱", file: "your-file-name.html" }
+            */
+        ];
+
+        const listElement = document.getElementById('game-list');
+        games.forEach(game => {
+            const li = document.createElement('li');
+            li.innerHTML = `<div class="box game-link"><a href="${game.file}?v=${version}">${game.name}</a></div>`;
+            listElement.appendChild(li);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>99,999以內的數：教科書定位板解密</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        * { box-sizing: border-box; }
+        body { 
+            font-family: sans-serif; text-align: center; background-color: #fef3c7; 
+            margin: 0; padding: env(safe-area-inset-top, 5px) env(safe-area-inset-right, 5px) env(safe-area-inset-bottom, 5px) env(safe-area-inset-left, 5px); 
+            min-height: 100vh; min-height: calc(100vh - env(safe-area-inset-bottom));
+            display: flex; flex-direction: column; align-items: center; justify-content: center; 
+            overflow: hidden; touch-action: manipulation; 
+        }
+        h1 { color: #b45309; font-size: 17px; margin: 2px 0; }
+        
+        #gameScreen { 
+            width: 100%; max-width: 580px; height: 98vh; max-height: 820px;
+            display: flex; flex-direction: column; align-items: center; justify-content: space-between; 
+            background: #fff; border-radius: 16px; border: 3px solid #f59e0b; padding: 6px; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1); margin: auto;
+            position: relative;
+        }
+
+        /* 遮罩共用樣式（開始畫面 & 結算成果頁） */
+        .overlay-screen {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 255, 255, 0.98); border-radius: 13px;
+            display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+            z-index: 9999; padding: 25px 20px; overflow-y: auto; text-align: left;
+        }
+        .start-content-box {
+            max-width: 450px; width: 100%; display: flex; flex-direction: column; align-items: center; margin: auto 0; text-align: center;
+        }
+        .overlay-screen h2 { color: #b45309; font-size: 22px; margin-bottom: 12px; text-align: center; }
+        
+        .intro-card {
+            background: #fffbeb; border: 2px solid #fde68a;
+            border-radius: 12px; padding: 12px 15px; margin-bottom: 15px; width: 100%;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05); text-align: left;
+        }
+        .intro-card h3 { margin: 0 0 6px 0; font-size: 15px; color: #b45309; }
+        .intro-card ul { margin: 0; padding-left: 18px; font-size: 13px; line-height: 1.6; color: #78350f; }
+        .intro-card li { margin-bottom: 6px; }
+
+        .action-main-btn {
+            background-color: #16a34a; color: white; border: none; border-radius: 14px;
+            padding: 15px 40px; font-size: 20px; font-weight: bold; cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: transform 0.1s;
+            width: 100%; max-width: 280px; text-align: center; margin-top: 5px; margin-bottom: 15px;
+        }
+        .action-main-btn:active { transform: scale(0.95); background-color: #15803d; }
+
+        /* 結算頁面專屬明顯展示卡片 */
+        .result-display-card {
+            background: #f0fdf4; border: 3px solid #22c55e; border-radius: 16px;
+            padding: 20px 15px; margin-bottom: 20px; width: 100%; text-align: center;
+            box-shadow: 0 6px 15px rgba(34,197,94,0.15);
+        }
+        .result-num-large {
+            font-size: 32px; font-weight: bold; margin: 10px 0; font-family: monospace;
+        }
+        .result-chinese-large {
+            font-size: 20px; font-weight: bold; color: #166534; margin-top: 8px; line-height: 1.4;
+        }
+        
+        .status-bar { 
+            display: flex; justify-content: space-between; align-items: center; 
+            width: 100%; font-size: 14px; font-weight: bold; color: #b45309; 
+            border-bottom: 2px solid #fef3c7; padding-bottom: 3px; padding-left: 5px; padding-right: 5px; 
+        }
+
+        .control-btn {
+            background-color: #f59e0b; color: white; border: none; border-radius: 8px;
+            padding: 4px 10px; font-size: 12px; font-weight: bold; cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+        }
+        .control-btn:active { transform: scale(0.95); background-color: #d97706; }
+
+        /* 調整速度拉霸與聽題目控制面板區 */
+        .top-panel {
+            display: flex; justify-content: space-between; align-items: center; width: 100%;
+            background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 10px; padding: 4px 10px;
+        }
+        .slider-box {
+            display: flex; flex-direction: column; align-items: center; gap: 2px;
+        }
+        .slider-title { font-size: 11px; font-weight: bold; color: #7c3aed; }
+        .slider-row { display: flex; align-items: center; gap: 6px; }
+        
+        .slider-row input[type=range] {
+            width: 95px; cursor: pointer; accent-color: #8b5cf6; height: 8px;
+        }
+        .slider-row input[type=range]::-webkit-slider-thumb {
+            width: 20px; height: 20px; border-radius: 50%;
+            background: #ffffff; border: 3px solid #7c3aed;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        .speed-text { font-size: 11px; font-weight: bold; color: #7c3aed; width: 42px; text-align: left; }
+
+        .listen-action-btn {
+            background-color: #0ea5e9; color: white; border: none; border-radius: 8px;
+            padding: 6px 12px; font-size: 12px; font-weight: bold; cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.15); display: flex; align-items: center; gap: 4px;
+        }
+        .listen-action-btn:active { transform: scale(0.95); background-color: #0284c7; }
+
+        .step-banner { background: #fef3c7; color: #92400e; padding: 5px 8px; border-radius: 8px; font-size: 13px; font-weight: bold; width: 100%; line-height: 1.2; }
+
+        /* 總金額提示看板（顏色標示：萬級藍色、個級黃色） */
+        .wallet-question-box {
+            width: 100%; background: #f8fafc; border: 2px solid #cbd5e1; border-radius: 10px; padding: 6px; font-size: 15px; font-weight: bold; color: #334155; text-align: center;
+        }
+        .num-wan { background-color: #e0f2fe; color: #0369a1; padding: 2px 4px; border-radius: 4px; margin: 0 1px; }
+        .num-ge  { background-color: #fef9c3; color: #854d0e; padding: 2px 4px; border-radius: 4px; margin: 0 1px; }
+
+        /* 教科書標準定位板表格 (5位數：萬位到個位，對應最高99,999) */
+        .textbook-place-table {
+            display: flex; flex-direction: column; align-items: center;
+            background: #fff; border: 2px solid #94a3b8; border-radius: 8px;
+            width: 100%; max-width: 580px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+        .tbl-row {
+            display: flex; width: 100%; border-bottom: 1px solid #cbd5e1;
+        }
+        .tbl-row:last-child { border-bottom: none; }
+        
+        .tbl-cell {
+            flex: 1; height: 38px; text-align: center; display: flex; align-items: center; justify-content: center;
+            font-size: 12px; font-weight: bold; color: #475569; border-right: 1px dashed #94a3b8;
+            line-height: 1.1; padding: 2px;
+        }
+        .tbl-cell:last-child { border-right: none; }
+
+        .bg-wan { background-color: #e0f2fe; }
+        .bg-ge  { background-color: #fef9c3; }
+
+        .tbl-val-cell {
+            flex: 1; height: 48px; text-align: center; display: flex; align-items: center; justify-content: center;
+            font-size: 22px; font-weight: bold; font-family: monospace; border-right: 1px dashed #94a3b8;
+            background: #fff; color: #cbd5e1;
+        }
+        .tbl-val-cell:last-child { border-right: none; }
+        .tbl-val-cell.active { border: 3px solid #f59e0b; background: #fef08a; color: #b45309; animation: pulse 1s infinite; }
+        .tbl-val-cell.filled { border: 2px solid #16a34a; background: #dcfce7; color: #166534; }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+            100% { transform: scale(1); }
+        }
+
+        #drop-game-container {
+            position: relative; width: 100%; height: 110px;
+            background: #f1f5f9; border: 2px solid #cbd5e1; border-radius: 10px;
+            overflow: hidden; touch-action: manipulation;
+        }
+
+        .falling-option {
+            position: absolute; width: 50px; height: 50px;
+            background: radial-gradient(circle, #fcd34d 60%, #f59e0b 100%);
+            border: 3px solid #d97706; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 22px; font-weight: bold; color: #78350f;
+            cursor: pointer; box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+            animation: fall linear forwards; z-index: 999;
+        }
+        .falling-option:active { transform: scale(0.9); }
+
+        @keyframes fall {
+            0% { top: -50px; }
+            100% { top: 60px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="gameScreen">
+        <div id="startOverlay" class="overlay-screen">
+            <div class="start-content-box">
+                <h2>📖 99,999以內的數：定位板解密 📖</h2>
+
+                <div class="intro-card">
+                    <h3>📖 遊戲使用說明</h3>
+                    <ul>
+                        <li><strong>由右到左引導：</strong>先問「個位數」➔ 依序往左到「萬位數」（挑戰最高 99,999）。</li>
+                        <li><strong>速度拉霸與聽題目：</strong>可隨時拉動拉霸調整速度，並點擊「🔊 聽題目」。</li>
+                        <li><strong>課本定位版配色：</strong>萬級（藍色）與個級（黃色）完美對應課本。</li>
+                        <li><strong>隨機題庫系統：</strong>每次開始或過關都會隨機出 99,999 以內的數。</li>
+                    </ul>
+                </div>
+
+                <button class="action-main-btn" onclick="startGame()">🎮 開始遊戲</button>
+            </div>
+        </div>
+
+        <div id="resultOverlay" class="overlay-screen" style="display: none;">
+            <div class="start-content-box">
+                <h2>🌟 恭喜完成本關挑戰！ 🌟</h2>
+                
+                <div class="result-display-card">
+                    <div style="font-size: 13px; color: #166534; font-weight: bold;">正確數字：</div>
+                    <div class="result-num-large" id="resultNumBox"></div>
+                    <div style="font-size: 13px; color: #166534; font-weight: bold; margin-top: 10px;">國字讀法：</div>
+                    <div class="result-chinese-large" id="resultChineseBox"></div>
+                </div>
+
+                <button class="action-main-btn" onclick="proceedToNextQuestion()">▶ 進入下一關</button>
+            </div>
+        </div>
+
+        <h1>📖 99,999以內的數：定位板解密</h1>
+        <div class="status-bar">
+            <div id="score">已完成: 0 關</div>
+            <button class="control-btn" id="pauseBtn" onclick="togglePause()">暫停</button>
+        </div>
+        
+        <div class="top-panel">
+            <div class="slider-box">
+                <div class="slider-title">調整速度拉霸</div>
+                <div class="slider-row">
+                    <input type="range" id="speedSlider" min="1" max="10" value="3" oninput="updateSpeed(this.value)">
+                    <span class="speed-text" id="speedLabel">速度 3</span>
+                </div>
+            </div>
+            <button class="listen-action-btn" onclick="speakCurrentQuestion()">🔊 聽題目</button>
+        </div>
+
+        <div class="step-banner" id="stepBanner">準備開始！</div>
+
+        <div class="wallet-question-box">
+            數字：<span id="totalTextContainer"></span>
+        </div>
+
+        <div class="textbook-place-table">
+            <div class="tbl-row">
+                <div class="tbl-cell bg-wan">萬<br>位</div>
+                <div class="tbl-cell bg-ge">千<br>位</div>
+                <div class="tbl-cell bg-ge">百<br>位</div>
+                <div class="tbl-cell bg-ge">十<br>位</div>
+                <div class="tbl-cell bg-ge">個<br>位</div>
+            </div>
+            <div class="tbl-row">
+                <div class="tbl-val-cell bg-wan" id="boxW">?</div>
+                <div class="tbl-val-cell bg-ge" id="boxTh">?</div>
+                <div class="tbl-val-cell bg-ge" id="boxH">?</div>
+                <div class="tbl-val-cell bg-ge" id="boxT">?</div>
+                <div class="tbl-val-cell bg-ge" id="boxU">?</div>
+            </div>
+        </div>
+
+        <div id="feedback" style="font-size: 15px; color: #d97706; font-weight: bold; min-height: 20px;"></div>
+        
+        <div id="drop-game-container"></div>
+    </div>
+
+    <script>
+        let score = 0;
+        let currentTotal = 40980;
+        let currentSpeedVal = 3; 
+        
+        // 5個位值的依序引導陣列（由右到左：個 ➔ 十 ➔ 百 ➔ 千 ➔ 萬）
+        const steps = [
+            { key: 'u', id: 'boxU', name: '個位數' },
+            { key: 't', id: 'boxT', name: '十位數' },
+            { key: 'h', id: 'boxH', name: '百位數' },
+            { key: 'th', id: 'boxTh', name: '千位數' },
+            { key: 'w', id: 'boxW', name: '萬位數' }
+        ];
+
+        let currentStepIndex = 0;
+        let digits = {};
+        let gameInterval = null;
+        let activeOptions = [];
+        let isLocked = false;
+        let isPaused = false;
+        let lastQuestionNum = -1;
+
+        // 99,999以內的豐富題庫（涵蓋各種位值變化與零的讀法）
+        const questionPool = [
+            { num: 12345, text: "一萬二千三百四十五" },
+            { num: 20580, text: "二萬零五百八十" },
+            { num: 34670, text: "三萬四千六百七十" },
+            { num: 40980, text: "四萬零九百八十" },
+            { num: 51957, text: "五萬一千九百五十七" },
+            { num: 60492, text: "六萬零四百九十二" },
+            { num: 72008, text: "七萬二千零八" },
+            { num: 83215, text: "八萬三千二百一十五" },
+            { num: 99999, text: "九萬九千九百九十九" },
+            { num: 10036, text: "一萬零三十六" },
+            { num: 45000, text: "四萬五千" },
+            { num: 70005, text: "七萬整零五" } // 修正口語化可改為標準
+        ];
+        
+        // 覆寫更精準的中文轉換工具，支援任意 99,999 以內的數字讀法
+        function getChineseNum(num) {
+            const digitsMap = ["零", "一", "二", "三", "四", "五", "六", "七", "八", "九"];
+            const unitsMap = ["", "十", "百", "千"];
+            
+            let str = String(num).padStart(5, '0');
+            let w = parseInt(str[0]);
+            let th = parseInt(str[1]);
+            let h = parseInt(str[2]);
+            let t = parseInt(str[3]);
+            let u = parseInt(str[4]);
+
+            let res = "";
+            if (w > 0) res += digitsMap[w] + "萬";
+            
+            // 千位
+            if (th > 0) {
+                res += digitsMap[th] + "千";
+            } else if (w > 0 && (h > 0 || t > 0 || u > 0)) {
+                res += "零";
+            }
+
+            // 百位
+            if (h > 0) {
+                res += digitsMap[h] + "百";
+            } else if (th > 0 && (t > 0 || u > 0)) {
+                res += "零";
+            }
+
+            // 十位
+            if (t > 0) {
+                if (!(th === 0 && h === 0 && w === 0 && t === 1)) { // 避免一十開頭唸成十
+                    res += digitsMap[t];
+                }
+                res += "十";
+            } else if (h > 0 && u > 0) {
+                res += "零";
+            }
+
+            // 個位
+            if (u > 0) {
+                res += digitsMap[u];
+            }
+
+            return res;
+        }
+
+        function speak(text) {
+            if (isPaused) return;
+            window.speechSynthesis.cancel();
+            const msg = new SpeechSynthesisUtterance(text);
+            msg.lang = 'zh-TW';
+            msg.rate = 0.85;
+            window.speechSynthesis.speak(msg);
+        }
+
+        function speakCurrentQuestion() {
+            if (currentStepIndex < steps.length) {
+                let currentStepObj = steps[currentStepIndex];
+                speak(`數字是 ${currentTotal}。請問，${currentStepObj.name}應該是多少呢？`);
+            }
+        }
+
+        function updateSpeed(val) {
+            currentSpeedVal = Number(val);
+            document.getElementById('speedLabel').innerText = `速度 ${currentSpeedVal}`;
+        }
+
+        function startGame() {
+            const dummy = new SpeechSynthesisUtterance("");
+            window.speechSynthesis.speak(dummy);
+            document.getElementById('startOverlay').style.display = 'none';
+            initQuestion();
+        }
+
+        function togglePause() {
+            isPaused = !isPaused;
+            const pauseBtn = document.getElementById('pauseBtn');
+            const options = document.querySelectorAll('.falling-option');
+
+            if (isPaused) {
+                pauseBtn.innerText = "繼續";
+                pauseBtn.style.backgroundColor = "#16a34a";
+                if (gameInterval) clearInterval(gameInterval);
+                window.speechSynthesis.cancel();
+                options.forEach(el => el.style.animationPlayState = 'paused');
+                document.getElementById('feedback').innerText = "⏸️ 遊戲已暫停";
+            } else {
+                pauseBtn.innerText = "暫停";
+                pauseBtn.style.backgroundColor = "#f59e0b";
+                options.forEach(el => el.style.animationPlayState = 'running');
+                document.getElementById('feedback').innerText = "";
+                if (!isLocked) {
+                    setupFalling();
+                }
+            }
+        }
+
+        // 以五位數分組底色（萬位藍色、個級黃色）
+        function renderColoredNumber(num) {
+            let str = String(num).padStart(5, '0');
+            let wanPart = str.substring(0, 1); // 萬位
+            let gePart = str.substring(1, 5);   // 千、百、十、個
+
+            let html = `<span class="num-wan">${wanPortText(wanPart)}</span><span class="num-ge">${gePart}</span>`;
+            document.getElementById('totalTextContainer').innerHTML = `<span class="num-wan">${wanPart}</span><span class="num-ge">${gePart}</span>`;
+        }
+
+        function wanPortText(val) {
+            return val;
+        }
+
+        function getFormattedColoredString(num) {
+            let str = String(num).padStart(5, '0');
+            let wanPart = str.substring(0, 1);
+            let gePart = str.substring(1, 5);
+            return `<span class="num-wan">${wanPart}</span><span class="num-ge">${gePart}</span>`;
+        }
+
+        let currentQObj = questionPool[0];
+
+        function initQuestion() {
+            if (isPaused) return;
+            isLocked = false;
+            currentStepIndex = 0;
+            
+            document.getElementById('resultOverlay').style.display = 'none';
+
+            // 清空所有定位板格子
+            steps.forEach(s => {
+                let el = document.getElementById(s.id);
+                el.innerText = '?';
+                el.className = el.classList.contains('bg-wan') ? 'tbl-val-cell bg-wan' : 'tbl-val-cell bg-ge';
+            });
+            document.getElementById(steps[0].id).classList.add('active');
+
+            // 隨機產生 10,000 到 99,999 之間的五位數（確保涵蓋完整範圍）
+            do {
+                currentTotal = Math.floor(Math.random() * 90000) + 10000;
+            } while (currentTotal === lastQuestionNum);
+            lastQuestionNum = currentTotal;
+
+            let chineseText = getChineseNum(currentTotal);
+            currentQObj = { num: currentTotal, text: chineseText };
+
+            let str = String(currentTotal).padStart(5, '0');
+            
+            // 對應 5 個位值的數字抓取
+            digits = {
+                w:  parseInt(str[0]),
+                th: parseInt(str[1]),
+                h:  parseInt(str[2]),
+                t:  parseInt(str[3]),
+                u:  parseInt(str[4])
+            };
+
+            renderColoredNumber(currentTotal);
+            let stepNamesList = ['一', '二', '三', '四', '五'];
+            document.getElementById('stepBanner').innerText = `【步驟${stepNamesList[0]}】數字是 ${currentTotal}，請問「${steps[0].name}」應該是多少呢？`;
+            speak(`數字是 ${currentTotal}。請問，${steps[0].name}應該是多少呢？`);
+
+            setupFalling();
+        }
+
+        function setupFalling() {
+            if (isPaused) return;
+            activeOptions.forEach(el => el.remove());
+            activeOptions = [];
+            if (gameInterval) clearInterval(gameInterval);
+
+            let currentStepObj = steps[currentStepIndex];
+            let currentTarget = digits[currentStepObj.key];
+
+            let options = [currentTarget];
+            while (options.length < 4) {
+                let r = Math.floor(Math.random() * 10);
+                if (!options.includes(r)) options.push(r);
+            }
+            options.sort(() => Math.random() - 0.5);
+
+            let index = 0;
+            gameInterval = setInterval(() => {
+                if (isLocked || isPaused) return;
+                if (index >= options.length) index = 0;
+                spawnFallingOption(options[index]);
+                index++;
+            }, 2000);
+        }
+
+        function spawnFallingOption(val) {
+            if (isLocked || isPaused) return;
+            const container = document.getElementById('drop-game-container');
+            if (!container) return;
+
+            const el = document.createElement('div');
+            el.className = 'falling-option';
+            el.innerText = val;
+
+            const randomX = Math.random() * (container.clientWidth - 50);
+            el.style.left = randomX + 'px';
+            
+            let duration = 15.0 - (currentSpeedVal * 1.2);
+            if (duration < 2.0) duration = 2.0;
+            el.style.animationDuration = duration + 's';
+
+            let isHandled = false;
+            const handleSelect = (e) => {
+                if (e) e.preventDefault();
+                if (isLocked || isHandled || isPaused) return;
+
+                let currentStepObj = steps[currentStepIndex];
+                let targetVal = digits[currentStepObj.key];
+
+                if (val === targetVal) {
+                    isHandled = true;
+                    isLocked = true;
+                    if (gameInterval) clearInterval(gameInterval);
+                    activeOptions.forEach(opt => opt.remove());
+
+                    let cellEl = document.getElementById(currentStepObj.id);
+                    cellEl.innerText = targetVal;
+                    cellEl.classList.remove('active');
+                    cellEl.classList.add('filled');
+
+                    document.getElementById('feedback').innerText = `🎉 ${currentStepObj.name}算對了！`;
+                    confetti();
+
+                    currentStepIndex++;
+
+                    if (currentStepIndex < steps.length) {
+                        let nextStepObj = steps[currentStepIndex];
+                        speak(`${currentStepObj.name}算對了，是 ${targetVal}。接下來，請問${nextStepObj.name}應該是多少呢？`);
+
+                        setTimeout(() => {
+                            if (isPaused) return;
+                            isLocked = false;
+                            document.getElementById(nextStepObj.id).classList.add('active');
+                            let stepNamesList = ['一', '二', '三', '四', '五'];
+                            document.getElementById('stepBanner').innerText = `【步驟${stepNamesList[currentStepIndex]}】請問「${nextStepObj.name}」應該是多少呢？`;
+                            setupFalling();
+                        }, 3000);
+
+                    } else {
+                        // 5個位值全部完成：顯示專屬的成果展示頁面，並完整清晰朗讀
+                        score++;
+                        document.getElementById('score').innerText = `已完成: ${score} 關`;
+                        confetti();
+
+                        document.getElementById('resultNumBox').innerHTML = getFormattedColoredString(currentTotal);
+                        document.getElementById('resultChineseBox').innerText = currentQObj.text;
+
+                        document.getElementById('resultOverlay').style.display = 'flex';
+                        document.getElementById('feedback').innerText = `🌟 恭喜過關！`;
+
+                        speak(`太棒了！ ${currentTotal}，國字讀法是，${currentQObj.text}。恭喜完成本關挑戰！`);
+                    }
+
+                } else {
+                    isHandled = true;
+                    speak(`再想一想，${currentStepObj.name}是多少呢？`);
+                    document.getElementById('feedback').innerText = `❌ ${currentStepObj.name}不對喔，再試一次！`;
+                    el.style.opacity = "0";
+                    setTimeout(() => el.remove(), 300);
+                }
+            };
+
+            el.addEventListener('click', handleSelect);
+            el.addEventListener('touchstart', handleSelect, { passive: false });
+            el.addEventListener('animationend', () => {
+                el.remove();
+                activeOptions = activeOptions.filter(item => item !== el);
+            });
+
+            container.appendChild(el);
+            activeOptions.push(el);
+        }
+
+        function proceedToNextQuestion() {
+            window.speechSynthesis.cancel();
+            document.getElementById('resultOverlay').style.display = 'none';
+            initQuestion();
+        }
+    </script>
+</body>
+</html>
