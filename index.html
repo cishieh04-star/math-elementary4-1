@@ -56,7 +56,7 @@
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
             gap: 15px; 
         }
-     
+      
         .game-link { 
             background: #d35400; color: #ffffff; 
             font-size: 1.1em; 
@@ -88,26 +88,26 @@
     <script>
         const version = "1"; // 更新版本號以防快取
         const games = [
-            { name: "1. 定位版遊戲：認識十萬以內的數字", file: "one-hundred-thousand.html" },
-            { name: "2. 定位版遊戲：認識一億以內的數字", file: "one-hundred-million.html" },
-            { name: "3. 五位數加法互動遊戲(無進位)", file: "5-digit-addition(basic).html" },
-            { name: "4. 五位數加法互動遊戲(有進位)", file: "5-digit-addition.html" },
-            { name: "5. 六位數加法互動遊戲(無進位)", file: "6-digit-addition(basic).html" },
-            { name: "6. 六位數加法互動遊戲(有進位)", file: "6-digit-addition.html" },
-            { name: "7. 七位數加法互動遊戲(無進位)", file: "7-digit-addition(basic).html" },
-            { name: "8. 七位數加法互動遊戲(有進位)", file: "7-digit-addition.html" },
-            { name: "9. 八位數加法互動遊戲(無進位)", file: "8-digit-addition(basic).html" },
-            { name: "10. 八位數加法互動遊戲(有進位)", file: "8-digit-addition.html" }
-           
-            /* 如果您還有其他小四上的遊戲檔案，可以依照下方格式繼續擴充：
-               { name: "3. 遊戲名稱", file: "your-file-name.html" }
-            */
+            /* 已清除手動編號，改由程式自動產生 */
+            { name: "定位版遊戲：認識十萬以內的數字", file: "one-hundred-thousand.html" },
+            { name: "定位版遊戲：認識一億以內的數字", file: "one-hundred-million.html" },
+            { name: "五位數加法互動遊戲(無進位)", file: "5-digit-addition(basic).html" },
+            { name: "五位數加法互動遊戲(有進位)", file: "5-digit-addition.html" },
+            { name: "六位數加法互動遊戲(無進位)", file: "6-digit-addition(basic).html" },
+            { name: "六位數加法互動遊戲(有進位)", file: "6-digit-addition.html" },
+            { name: "七位數加法互動遊戲(無進位)", file: "7-digit-addition(basic).html" },
+            { name: "七位數加法互動遊戲(有進位)", file: "7-digit-addition.html" },
+            { name: "八位數加法互動遊戲(無進位)", file: "8-digit-addition(basic).html" },
+            { name: "八位數加法互動遊戲(有進位)", file: "8-digit-addition.html" }
         ];
 
         const listElement = document.getElementById('game-list');
-        games.forEach(game => {
+        
+        /* 透過 JavaScript 自動計算並加上流水編號 */
+        games.forEach((game, index) => {
             const li = document.createElement('li');
-            li.innerHTML = `<div class="box game-link"><a href="${game.file}?v=${version}">${game.name}</a></div>`;
+            const displayNumber = index + 1;
+            li.innerHTML = `<div class="box game-link"><a href="${game.file}?v=${version}">${displayNumber}. ${game.name}</a></div>`;
             listElement.appendChild(li);
         });
     </script>
