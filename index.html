@@ -3,17 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>小四上數學互動遊戲</title>
-    
-    <!-- 強制通訊軟體（如 LINE）抓取正確的標題與說明，避免殘留舊的字樣 -->
-    <meta property="og:title" content="小四上數學互動遊戲">
-    <meta property="og:description" content="請選擇下列課程遊戲單元">
-    <meta property="og:type" content="website">
-
+    <title>小四上數學動遊戲</title>
     <style>
         body { 
             font-family: "Helvetica Neue", Arial, sans-serif; 
             padding: 20px; 
+            /* 放寬最大寬度，讓 4 個選項有足夠空間顯示不擁擠 */
             max-width: 1200px; 
             margin: auto; 
             background-color: #9c978a; 
@@ -25,9 +20,12 @@
             margin: 10px 0;
             border-radius: 8px;
             font-weight: bold;
+            text-align: center;
             box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+            /* 讓按鈕內文字完美垂直/水平置中 */
             display: flex;
             align-items: center;
+            justify-content: center;
             box-sizing: border-box;
         }
 
@@ -35,16 +33,12 @@
         .header-box { 
             background: #0b0573; color: #ffffff; 
             font-size: 1.5em; margin-bottom: 20px;
-            justify-content: center;
-            text-align: center;
         }
         
         /* 階層 2：黃底黑字副標題 */
         .category-box { 
             background: #f1c40f; color: #000000; 
             font-size: 1.1em; width: fit-content; margin: 10px auto; 
-            justify-content: center;
-            text-align: center;
         }
         
         /* 階層 3：橘色按鈕 Grid 佈局 */
@@ -52,20 +46,17 @@
             list-style-type: none; 
             padding: 0; 
             display: grid; 
-            /* 彈性自動適應不同裝置螢幕大小，保持整齊 */
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            /* 關鍵修改：強制設定為 4 個一排 */
+            grid-template-columns: repeat(4, 1fr); 
             gap: 15px; 
         }
-      
+        
         .game-link { 
             background: #d35400; color: #ffffff; 
             font-size: 1.1em; 
             transition: transform 0.2s;
-            height: 100%; 
+            height: 100%; /* 讓每一排的按鈕高度自動對齊一致 */
             margin: 0;
-            /* 讓文字靠左對齊並保留舒適的左側間距 */
-            justify-content: flex-start;
-            padding-left: 20px;
         }
         .game-link:hover { transform: scale(1.02); }
 
@@ -73,22 +64,21 @@
 
         /* RWD 微調：如果是在直立的小螢幕手機上觀看，字體自動縮小以防破版 */
         @media (max-width: 768px) {
-            .game-link { font-size: 0.9em; padding: 10px 15px; }
+            .game-link { font-size: 0.9em; padding: 10px 5px; }
             ul { gap: 10px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="box header-box">小四上數學互動遊戲</div>
+    <div class="box header-box">小四上數學動遊戲</div>
     <div class="box category-box">請選擇下列課程遊戲單元</div>
 
     <ul id="game-list"></ul>
 
     <script>
-        const version = "1"; // 更新版本號以防快取
+        const version = "1";
         const games = [
-            /* 已清除手動編號，改由程式自動產生 */
             { name: "單元一<br>一億以內的數字</a>", file: "math-4-1.html" },
             { name: "定位版遊戲：認識十萬以內的數字", file: "one-hundred-thousand.html" },
             { name: "定位版遊戲：認識一億以內的數字", file: "one-hundred-million.html" },
@@ -100,15 +90,16 @@
             { name: "七位數加法互動遊戲(有進位)", file: "7-digit-addition.html" },
             { name: "八位數加法互動遊戲(無進位)", file: "8-digit-addition(basic).html" },
             { name: "八位數加法互動遊戲(有進位)", file: "8-digit-addition.html" }
+           
         ];
 
         const listElement = document.getElementById('game-list');
         
-        /* 透過 JavaScript 自動計算並加上流水編號 */
+        /* 透過迴圈中的 index 自動幫每一個項目加上流水編號 */
         games.forEach((game, index) => {
             const li = document.createElement('li');
-            const displayNumber = index + 1;
-            li.innerHTML = `<div class="box game-link"><a href="${game.file}?v=${version}">${displayNumber}. ${game.name}</a></div>`;
+            const displayNumber = index + 1; // 自動計算編號 (1, 2, 3...)
+            li.innerHTML = `<div class="box game-link"><a href="${game.file}?v=${version}">${displayNumber}.${game.name}</a></div>`;
             listElement.appendChild(li);
         });
     </script>
