@@ -1931,7 +1931,7 @@ function ldMount(host,a,d,o){
 function ldStatic(a,d,q,r){return `<div class="lds"><div class="lds-q">${q}</div><div class="lds-m"><span>${d}</span><b>)</b><span class="t">${a}</span></div><div class="lds-p">${d*q}</div><div class="lds-r">${r}</div></div>`}
 
 /* ================= 共用講解視窗 ================= */
-function runPanel(ovId,title,body,steps,calcs,post,endSay){
+function runPanel(ovId,title,body,steps,calcs,post,endSay,again){
   let ov=document.getElementById(ovId);
   if(!ov){ov=document.createElement('div');ov.className='ov';ov.id=ovId;ov.innerHTML='<div class="panel exppanel"></div>';document.getElementById('app').appendChild(ov)}
   const pnl=ov.firstChild;const tok=(ov._tok||0)+1;ov._tok=tok;const alive=()=>ov._tok===tok&&ov.classList.contains('on');
@@ -1939,6 +1939,7 @@ function runPanel(ovId,title,body,steps,calcs,post,endSay){
   const Q=s=>pnl.querySelector(s);
   const close=()=>{TTS.stop();ov._tok++;ov.classList.remove('on')};
   Q(`#${ovId}Back`).onclick=close;
+  Q(`#${ovId}Again`).onclick=()=>{if(!guard(300))return;TTS.stop();if(again)again();else close()};
   ov.classList.add('on');
   const res=[];let ci=0;
   const fin=()=>{if(!alive())return;Q(`#${ovId}Back`).classList.add('pulse');speakSeq([(endSay||'')+'想好了，就按「回去作答」。'])};
@@ -1963,7 +1964,7 @@ function ldHelp(st,d){
   rows.forEach(m=>steps.push({t:`${d}乘${m}等於${d*m}，`+(d*m<=P?`沒有超過${P}。`:`比${P}大，超過了！`),on:pnl=>{const x=pnl.querySelector(`.lad[data-m="${m}"]`);x.classList.add('on',d*m<=P?'y':'n');x.querySelector('b').textContent=d*m<=P?'✔':'✘'}}));
   steps.push({t:st.q?`所以最多是${st.q}個，商寫${st.q}。`:`${d}乘1就超過了，所以不夠除，商寫0。`,on:pnl=>{const x=pnl.querySelector(`.lad[data-m="${st.q}"]`);x&&x.classList.add('pick');pnl.querySelector('.ex-ans').innerHTML=`<div class="big">商寫 ${st.q}</div>`}});
   if(st.q){if(d>=10)calcs.push({a:d,b:st.q,op:'×',label:`用直式算${d}乘${st.q}`});calcs.push({a:P,b:st.prod,op:'－',label:`再用直式減：${P}減${st.prod}，算剩下多少`});}
-  runPanel('ovHelp','教我如何計算',body,steps,calcs,[],'');
+  runPanel('ovHelp','教我如何計算',body,steps,calcs,[],'',()=>ldHelp(st,d));
 }
 // 分組圖
 function groupPic(a,d,ic,bag){
@@ -1996,7 +1997,7 @@ function showDx(q){
     ls.forEach((t,i)=>steps.push({t,on:pnl=>{const x=pnl.querySelectorAll('.exl li')[i];x&&x.classList.add('on')}}));
     (e.calc||[]).forEach(([a,op,b,label])=>calcs.push({a,op,b,label}));
   }
-  runPanel('ovExp','教我怎麼算',body,steps,calcs,post,'');
+  runPanel('ovExp','教我怎麼算',body,steps,calcs,post,'',()=>showDx(q));
 }
 
 /* ================= 題型：直式除法 ================= */
